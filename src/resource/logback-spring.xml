@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <contextName>cdc-major-disease-service</contextName>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <!--定义变量-->
+    <property name="logging.maxFileSize" value="50MB"></property>
+    <property name="logging.maxHistory" value="60"></property>
+    <property name="logging.totalSizeCap" value="20GB"></property>
+    <property name="logging.path" value="/data/logs"></property>
+    <property name="spring.application.name" value="cdc-major-disease-service"></property>
+    <property name="logging.pattern.file" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID:- } %tid app_id:${spring.application.name} --- [%t] %-40.40logger{39} : %m%n"></property>
+    <property name="logging.pattern.console" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) ${PID:- } app_id:${spring.application.name} --- [%highlight(%t)] %-40.40logger{39} : %m%n" ></property>
+
+    <!--格式化日志输出-->
+    <appender name="error-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.path}/${spring.application.name}/log_error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logging.path}/${spring.application.name}/error/log-error-%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+            <maxFileSize>${logging.maxFileSize}</maxFileSize>
+            <maxHistory>${logging.maxHistory}</maxHistory>
+            <totalSizeCap>${logging.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>${logging.pattern.file}</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="warn-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.path}/${spring.application.name}/log_warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logging.path}/${spring.application.name}/warn/log-warn-%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+            <maxFileSize>${logging.maxFileSize}</maxFileSize>
+            <maxHistory>${logging.maxHistory}</maxHistory>
+            <totalSizeCap>${logging.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>${logging.pattern.file}</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>warn</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logging.path}/${spring.application.name}/all.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logging.path}/${spring.application.name}/all/log-all-%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+            <maxFileSize>${logging.maxFileSize}</maxFileSize>
+            <maxHistory>${logging.maxHistory}</maxHistory>
+            <totalSizeCap>${logging.totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>${logging.pattern.file}</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="org.apache.skywalking.apm.toolkit.log.logback.v1.x.TraceIdPatternLogbackLayout">
+                <pattern>${logging.pattern.console}</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <!--最基础的日志输出级别-->
+    <root level="INFO">
+        <appender-ref ref="error-file"/>
+        <appender-ref ref="warn-file"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="console"/>
+    </root>
+
+    <!--多环境日志输出-->
+    <springProfile name="dev,test">
+        <!--设置一个包或具体的某一个类的日志打印级别，默认向root传递打印信息-->
+        <logger name="com.iflytek.majordisease" level="DEBUG"/>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="com.iflytek.majordisease" level="INFO"/>
+    </springProfile>
+
+</configuration>
