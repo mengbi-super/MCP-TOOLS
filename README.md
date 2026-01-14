@@ -20,6 +20,21 @@
 pip install mcp-logback-analyzer
 ```
 
+### 使用国内镜像源（国内用户推荐）
+
+如果无法访问 PyPI 或下载速度慢，可以使用国内镜像源：
+
+```bash
+# 清华大学镜像（推荐）
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple mcp-logback-analyzer
+
+# 阿里云镜像
+pip install -i https://mirrors.aliyun.com/pypi/simple/ mcp-logback-analyzer
+
+# 腾讯云镜像
+pip install -i https://mirrors.cloud.tencent.com/pypi/simple mcp-logback-analyzer
+```
+
 ### 从私有 PyPI 安装
 
 ```bash
@@ -29,8 +44,8 @@ pip install -i http://your-server:8080/simple/ mcp-logback-analyzer
 ### 从源码安装
 
 ```bash
-git clone https://github.com/yourusername/mcp-logback-analyzer.git
-cd mcp-logback-analyzer
+git clone https://github.com/mengbi-super/MCP-TOOLS.git
+cd MCP-TOOLS
 pip install -e .
 ```
 
@@ -74,7 +89,7 @@ pip install mcp-logback-analyzer
 
 ## 📖 文档
 
-详细文档请参考：[完整文档.md](完整文档.md)
+详细文档请参考：[使用指南.md](使用指南.md)
 
 ## 🔧 配置说明
 
@@ -122,8 +137,8 @@ print(f"找到 {result['total_matches']} 个匹配结果")
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/mcp-logback-analyzer.git
-cd mcp-logback-analyzer
+git clone https://github.com/mengbi-super/MCP-TOOLS.git
+cd MCP-TOOLS
 
 # 安装开发依赖
 pip install -e ".[dev]"
@@ -152,8 +167,8 @@ MIT License
 
 ## 📧 联系方式
 
-如有问题，请提交 Issue 或联系：your.email@example.com
+如有问题，请提交 Issue 或联系：mengbi1014@gmail.com
 
 ---
 
-更多信息请查看 [完整文档.md](完整文档.md)
+更多信息请查看 [使用指南.md](使用指南.md)

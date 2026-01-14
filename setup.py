@@ -5,13 +5,13 @@ from setuptools import setup, find_packages
 
 setup(
     name="mcp-logback-analyzer",
-    version="1.0.0",
+    version="1.0.2",
     description="日志检索和分析工具 - 基于 FastMCP 的 MCP 工具",
-    long_description=open("完整文档.md", encoding="utf-8").read(),
+    long_description=open("使用指南.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="mengbi",
     author_email="mengbi1014@gmail.com",
-    url="https://github.com/yourusername/mcp-log-analyzer",
+    url="https://github.com/mengbi-super/MCP-TOOLS",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,
