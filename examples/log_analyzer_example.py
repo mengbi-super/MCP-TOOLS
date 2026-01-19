@@ -8,10 +8,20 @@
 import sys
 from pathlib import Path
 
-# 添加父目录到路径
-sys.path.insert(0, str(Path(__file__).parent))
+# 添加 src 目录到路径
+ROOT_DIR = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT_DIR / "src"))
 
-from log_analyzer_tool import LogAnalyzer
+from mcp_services.log_analyzer.tool import LogAnalyzer
+
+DEFAULT_LOGBACK_CONFIG = str(
+    ROOT_DIR
+    / "src"
+    / "mcp_services"
+    / "log_analyzer"
+    / "resources"
+    / "logback-spring.xml"
+)
 
 
 def example_analyze_logs():
@@ -20,7 +30,7 @@ def example_analyze_logs():
     print("示例 1: 分析错误日志")
     print("=" * 60)
     
-    analyzer = LogAnalyzer("src/resource/logback-spring.xml")
+    analyzer = LogAnalyzer(DEFAULT_LOGBACK_CONFIG)
     
     # 分析错误日志
     result = analyzer.analyze_logs(log_level="error", max_lines=500)
@@ -45,7 +55,7 @@ def example_get_config():
     print("示例 2: 获取 Logback 配置")
     print("=" * 60)
     
-    analyzer = LogAnalyzer("src/resource/logback-spring.xml")
+    analyzer = LogAnalyzer(DEFAULT_LOGBACK_CONFIG)
     
     print("\nLogback 配置信息:")
     print(f"  应用名称: {analyzer.app_name}")
@@ -88,7 +98,7 @@ def example_search_logs():
     print("示例 4: 搜索日志关键词")
     print("=" * 60)
     
-    analyzer = LogAnalyzer("src/resource/logback-spring.xml")
+    analyzer = LogAnalyzer(DEFAULT_LOGBACK_CONFIG)
     
     # 搜索关键词
     keyword = "Exception"

@@ -1,6 +1,11 @@
-# MCP 日志分析工具
+# MCP 工具集合
 
-一个基于 FastMCP 的 Model Context Protocol (MCP) 工具，用于分析 logback 配置的日志文件，检测代码缺陷并生成修复建议。
+基于 FastMCP 的 Model Context Protocol (MCP) 工具集合，提供日志分析与 Nacos 配置/服务状态检查能力。
+
+## ✨ MCP 服务
+
+- **log-analyzer**：分析 logback 日志，识别缺陷并输出修复建议
+- **nacos-helper**：读取 Nacos 配置、对比历史版本、检查服务注册状态（兼容 Nacos 2.4.x）
 
 ## ✨ 功能特性
 
@@ -59,17 +64,17 @@ pip install mcp-logback-analyzer
 
 ### 2. 配置 Cursor MCP
 
-编辑 Cursor 的 MCP 配置文件（参考 `cursor-mcp-config-example.json`）：
+编辑 Cursor 的 MCP 配置文件（参考 `configs/cursor-mcp-config-example.json`）：
 
 ```json
 {
   "mcpServers": {
     "log-analyzer": {
       "command": "python",
-      "args": ["-m", "tools.log_analyzer_tool"],
+      "args": ["-m", "mcp_services.log_analyzer.tool"],
       "cwd": "${workspaceFolder}",
       "env": {
-        "LOGBACK_CONFIG_PATH": "${workspaceFolder}/src/resource/logback-spring.xml",
+        "LOGBACK_CONFIG_PATH": "${workspaceFolder}/src/mcp_services/log_analyzer/resources/logback-spring.xml",
         "SPRING_APPLICATION_NAME": "your-app-name",
         "APP_PACKAGE": "com.example.yourpackage"
       }
@@ -89,7 +94,9 @@ pip install mcp-logback-analyzer
 
 ## 📖 文档
 
-详细文档请参考：[使用指南.md](使用指南.md)
+详细文档请参考：
+- [docs/使用指南.md](docs/使用指南.md)
+- [docs/Nacos使用指南.md](docs/Nacos使用指南.md)
 
 ## 🔧 配置说明
 
@@ -114,7 +121,7 @@ pip install mcp-logback-analyzer
 ### 分析错误日志
 
 ```python
-from tools.log_analyzer_tool import LogAnalyzer
+from mcp_services.log_analyzer.tool import LogAnalyzer
 
 analyzer = LogAnalyzer()
 result = analyzer.analyze_logs(log_level="error", max_lines=1000)
@@ -171,4 +178,4 @@ MIT License
 
 ---
 
-更多信息请查看 [使用指南.md](使用指南.md)
+更多信息请查看 [docs/使用指南.md](docs/使用指南.md)

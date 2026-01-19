@@ -7,7 +7,7 @@ setup(
     name="mcp-logback-analyzer",
     version="1.0.2",
     description="日志检索和分析工具 - 基于 FastMCP 的 MCP 工具",
-    long_description=open("使用指南.md", encoding="utf-8").read(),
+    long_description=open("docs/使用指南.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="mengbi",
     author_email="mengbi1014@gmail.com",
@@ -16,7 +16,7 @@ setup(
     package_dir={"": "src"},
     include_package_data=True,
     package_data={
-        "resource": ["*.xml"],
+        "mcp_services.log_analyzer": ["resources/*.xml"],
     },
     install_requires=[
         "fastmcp>=0.9.0",
@@ -24,7 +24,8 @@ setup(
     python_requires=">=3.8",
     entry_points={
         "console_scripts": [
-            "mcp-log-analyzer=tools.log_analyzer_tool:main",
+            "mcp-log-analyzer=mcp_services.log_analyzer.tool:main",
+            "mcp-nacos-helper=mcp_services.nacos.tool:main",
         ],
     },
     classifiers=[

@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "mcp-logback-analyzer"
 version = "1.0.2"
 description = "一个基于 FastMCP 的 Model Context Protocol (MCP) 工具，用于分析 Java Spring Boot 应用的日志文件，自动检测代码缺陷并生成修复建议。"
-readme = "使用指南.md"
+readme = "docs/使用指南.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
@@ -38,7 +38,7 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/mengbi-super/MCP-TOOLS"
-Documentation = "https://github.com/mengbi-super/MCP-TOOLS/blob/main/使用指南.md"
+Documentation = "https://github.com/mengbi-super/MCP-TOOLS/blob/main/docs/使用指南.md"
 Repository = "https://github.com/mengbi-super/MCP-TOOLS"
 Issues = "https://github.com/mengbi-super/MCP-TOOLS/issues"
 
@@ -49,4 +49,4 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.setuptools.package-data]
-"*" = ["resource/*.xml"]
+"mcp_services.log_analyzer" = ["resources/*.xml"]
