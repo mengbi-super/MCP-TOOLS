@@ -40,13 +40,16 @@
       ],
       "cwd": "${workspaceFolder}",
       "env": {
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
         "NACOS_SERVER_ADDR": "http://127.0.0.1:8848",
         "NACOS_NAMESPACE": "",
         "NACOS_GROUP": "DEFAULT_GROUP",
         "NACOS_USERNAME": "nacos",
         "NACOS_PASSWORD": "nacos",
         "NACOS_TIMEOUT": "5",
-        "NACOS_DATA_IDS": "application.yml,bootstrap.yml"
+        "NACOS_DATA_IDS": "application.yml,bootstrap.yml",
+        "NACOS_REGISTRY_NAMESPACE": ""
       },
       "description": "Nacos 配置与服务状态工具（本地源码运行，兼容 Nacos 2.4.x）"
     },
@@ -58,13 +61,16 @@
       ],
       "cwd": "${workspaceFolder}",
       "env": {
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
         "NACOS_SERVER_ADDR": "http://127.0.0.1:8848",
         "NACOS_NAMESPACE": "",
         "NACOS_GROUP": "DEFAULT_GROUP",
         "NACOS_USERNAME": "nacos",
         "NACOS_PASSWORD": "nacos",
         "NACOS_TIMEOUT": "5",
-        "NACOS_DATA_IDS": "application.yml,bootstrap.yml"
+        "NACOS_DATA_IDS": "application.yml,bootstrap.yml",
+        "NACOS_REGISTRY_NAMESPACE": ""
       },
       "description": "Nacos 配置与服务状态工具（PyPI 安装模式）"
     }
