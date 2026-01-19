@@ -2,7 +2,7 @@
 
 一个基于 FastMCP 的 Model Context Protocol (MCP) 工具，用于分析 Java Spring Boot 应用的日志文件，自动检测代码缺陷并生成修复建议。
 
-Nacos MCP 服务请参考：[Nacos使用指南.md](Nacos使用指南.md)
+Nacos MCP 服务请参考：[packages/nacos_helper/README.md](../nacos_helper/README.md)
 
 ---
 
@@ -240,7 +240,7 @@ python -c "from mcp_services.log_analyzer.tool import LogAnalyzer; print('安装
       "args": ["-m", "mcp_services.log_analyzer.tool"],
       "cwd": "${workspaceFolder}",
       "env": {
-        "LOGBACK_CONFIG_PATH": "${workspaceFolder}/src/mcp_services/log_analyzer/resources/logback-spring.xml"
+        "LOGBACK_CONFIG_PATH": "${workspaceFolder}/logback-spring.xml"
       }
     }
   }
@@ -251,7 +251,7 @@ python -c "from mcp_services.log_analyzer.tool import LogAnalyzer; print('安装
 - `command`: Python 解释器命令（`python` 或 `py`）
 - `args`: 使用模块方式运行（推荐）
 - `cwd`: 工作目录设置为项目根目录
-- `env`: 环境变量配置（可选，工具会自动从 logback 配置读取）
+- `env`: 环境变量配置（可选，未设置时使用包内置的 logback 配置）
 
 ### 步骤 3：重启 Cursor
 
@@ -499,7 +499,7 @@ python -c "from mcp_services.log_analyzer.tool import LogAnalyzer; print('安装
 
 ```json
 "env": {
-  "LOGBACK_CONFIG_PATH": "${workspaceFolder}/src/mcp_services/log_analyzer/resources/logback-spring.xml",
+  "LOGBACK_CONFIG_PATH": "${workspaceFolder}/logback-spring.xml",
   "SPRING_APPLICATION_NAME": "your-app-name",
   "APP_PACKAGE": "com.example.yourpackage",
   "ERROR_LOG_PATH": "${workspaceFolder}/logs/error.log"
@@ -510,7 +510,7 @@ python -c "from mcp_services.log_analyzer.tool import LogAnalyzer; print('安装
 
 | 环境变量 | 说明 | 是否必需 |
 |---------|------|---------|
-| `LOGBACK_CONFIG_PATH` | logback 配置文件路径 | 否（有默认值） |
+| `LOGBACK_CONFIG_PATH` | logback 配置文件路径 | 否（有默认值，包内置） |
 | `SPRING_APPLICATION_NAME` | 应用名称 | 否（自动推断） |
 | `APP_PACKAGE` | 应用包名（用于过滤堆栈跟踪） | 否（自动推断） |
 | `ERROR_LOG_PATH` | 错误日志文件路径 | 否（从 logback 读取） |

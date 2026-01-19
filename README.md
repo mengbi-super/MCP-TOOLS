@@ -4,18 +4,8 @@
 
 ## ✨ MCP 服务
 
-- **log-analyzer**：分析 logback 日志，识别缺陷并输出修复建议
-- **nacos-helper**：读取 Nacos 配置、对比历史版本、检查服务注册状态（兼容 Nacos 2.4.x）
-
-## ✨ 功能特性
-
-- 🔍 **智能日志分析**：自动提取异常信息，不限于预定义模式
-- 📊 **堆栈跟踪过滤**：保留应用包下的堆栈信息，过滤底层框架信息
-- 🎯 **缺陷检测**：自动识别异常类型并推断严重程度
-- 🔧 **自动修复建议**：生成代码修复建议
-- 🌐 **跨平台支持**：支持 Windows、Linux、Mac
-- ⚙️ **灵活配置**：支持环境变量、配置文件、命令行参数多种配置方式
-- 🚀 **Token 优化**：智能提取关键信息，减少 token 消耗
+- log-analyzer
+- nacos-helper
 
 ## 📦 安装
 
@@ -23,6 +13,7 @@
 
 ```bash
 pip install mcp-logback-analyzer
+pip install mcp-nacos-helper
 ```
 
 ### 使用国内镜像源（国内用户推荐）
@@ -32,18 +23,22 @@ pip install mcp-logback-analyzer
 ```bash
 # 清华大学镜像（推荐）
 pip install -i https://pypi.tuna.tsinghua.edu.cn/simple mcp-logback-analyzer
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple mcp-nacos-helper
 
 # 阿里云镜像
 pip install -i https://mirrors.aliyun.com/pypi/simple/ mcp-logback-analyzer
+pip install -i https://mirrors.aliyun.com/pypi/simple/ mcp-nacos-helper
 
 # 腾讯云镜像
 pip install -i https://mirrors.cloud.tencent.com/pypi/simple mcp-logback-analyzer
+pip install -i https://mirrors.cloud.tencent.com/pypi/simple mcp-nacos-helper
 ```
 
 ### 从私有 PyPI 安装
 
 ```bash
 pip install -i http://your-server:8080/simple/ mcp-logback-analyzer
+pip install -i http://your-server:8080/simple/ mcp-nacos-helper
 ```
 
 ### 从源码安装
@@ -51,92 +46,19 @@ pip install -i http://your-server:8080/simple/ mcp-logback-analyzer
 ```bash
 git clone https://github.com/mengbi-super/MCP-TOOLS.git
 cd MCP-TOOLS
-pip install -e .
+pip install -r requirements.txt
 ```
 
 ## 🚀 快速开始
 
-### 1. 安装依赖
-
-```bash
-pip install mcp-logback-analyzer
-```
-
-### 2. 配置 Cursor MCP
-
-编辑 Cursor 的 MCP 配置文件（参考 `configs/cursor-mcp-config-example.json`）：
-
-```json
-{
-  "mcpServers": {
-    "log-analyzer": {
-      "command": "python",
-      "args": ["-m", "mcp_services.log_analyzer.tool"],
-      "cwd": "${workspaceFolder}",
-      "env": {
-        "LOGBACK_CONFIG_PATH": "${workspaceFolder}/src/mcp_services/log_analyzer/resources/logback-spring.xml",
-        "SPRING_APPLICATION_NAME": "your-app-name",
-        "APP_PACKAGE": "com.example.yourpackage"
-      }
-    }
-  }
-}
-```
-
-### 3. 使用工具
-
-在 Cursor 中，你可以直接使用以下命令：
-
-- `analyze_logs` - 分析日志文件，检测代码缺陷
-- `search_logs` - 在日志中搜索关键词
-- `get_logback_config` - 获取 logback 配置信息
-- `auto_fix_defect` - 根据缺陷信息生成修复建议
+安装后请分别参考各组件的使用说明与配置示例。
 
 ## 📖 文档
 
 详细文档请参考：
-- [docs/使用指南.md](docs/使用指南.md)
-- [docs/Nacos使用指南.md](docs/Nacos使用指南.md)
 
-## 🔧 配置说明
-
-### 环境变量
-
-- `LOGBACK_CONFIG_PATH` - logback 配置文件路径
-- `SPRING_APPLICATION_NAME` - 应用名称
-- `APP_PACKAGE` - 应用包名（用于过滤堆栈跟踪）
-- `ERROR_LOG_PATH` - 错误日志文件路径
-- `WARN_LOG_PATH` - 警告日志文件路径
-- `ALL_LOG_PATH` - 全部日志文件路径
-
-### 配置优先级
-
-1. 方法参数
-2. 环境变量
-3. logback 配置
-4. 默认值
-
-## 📝 使用示例
-
-### 分析错误日志
-
-```python
-from mcp_services.log_analyzer.tool import LogAnalyzer
-
-analyzer = LogAnalyzer()
-result = analyzer.analyze_logs(log_level="error", max_lines=1000)
-
-print(f"发现 {result['total_defects']} 个缺陷")
-for defect in result['defects']:
-    print(f"类型: {defect['defect_type']}, 严重程度: {defect['severity']}")
-```
-
-### 搜索日志
-
-```python
-result = analyzer.search_logs(keyword="NullPointerException", log_level="error")
-print(f"找到 {result['total_matches']} 个匹配结果")
-```
+- [packages/log_analyzer/README.md](packages/log_analyzer/README.md)
+- [packages/nacos_helper/README.md](packages/nacos_helper/README.md)
 
 ## 🛠️ 开发
 
@@ -148,7 +70,8 @@ git clone https://github.com/mengbi-super/MCP-TOOLS.git
 cd MCP-TOOLS
 
 # 安装开发依赖
-pip install -e ".[dev]"
+pip install -e "packages/log_analyzer[dev]"
+pip install -e "packages/nacos_helper[dev]"
 
 # 运行测试
 pytest
@@ -161,7 +84,19 @@ pytest
 pip install build twine
 
 # 构建
+cd packages/log_analyzer
 python -m build
+
+cd ../nacos_helper
+python -m build
+```
+
+### 发布到 PyPI
+
+```bash
+# 在仓库根目录执行
+py scripts/upload_to_pypi.py packages/log_analyzer
+py scripts/upload_to_pypi.py packages/nacos_helper
 ```
 
 ## 📄 许可证
@@ -174,8 +109,8 @@ MIT License
 
 ## 📧 联系方式
 
-如有问题，请提交 Issue 或联系：mengbi1014@gmail.com
+如有问题，请提交 Issue 或联系：[mengbi1014@gmail.com](mailto:mengbi1014@gmail.com)
 
 ---
 
-更多信息请查看 [docs/使用指南.md](docs/使用指南.md)
+更多信息请查看 [packages/log_analyzer/README.md](packages/log_analyzer/README.md)

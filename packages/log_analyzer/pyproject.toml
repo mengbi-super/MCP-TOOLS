@@ -3,16 +3,16 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mcp-tools"
-version = "0.0.0"
-description = "MCP 工具单仓库（元包，仅用于仓库管理）。"
+name = "mcp-logback-analyzer"
+version = "1.0.3"
+description = "一个基于 FastMCP 的 MCP 工具，用于分析 Java Spring Boot 日志并生成修复建议。"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
     {name = "mengbi", email = "mengbi1014@gmail.com"}
 ]
-keywords = ["mcp", "tools", "monorepo"]
+keywords = ["mcp", "log", "analyzer", "logback", "fastmcp"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -25,6 +25,10 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 
+dependencies = [
+    "fastmcp>=0.9.0",
+]
+
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
@@ -34,9 +38,20 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/mengbi-super/MCP-TOOLS"
-Documentation = "https://github.com/mengbi-super/MCP-TOOLS/blob/main/README.md"
+Documentation = "https://github.com/mengbi-super/MCP-TOOLS/blob/main/packages/log_analyzer/README.md"
 Repository = "https://github.com/mengbi-super/MCP-TOOLS"
 Issues = "https://github.com/mengbi-super/MCP-TOOLS/issues"
 
+[project.scripts]
+mcp-log-analyzer = "mcp_services.log_analyzer.tool:main"
+
 [tool.setuptools]
-packages = []
+package-dir = {"" = "../../src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["../../src"]
+include = ["mcp_services", "mcp_services.log_analyzer", "tools"]
+
+[tool.setuptools.package-data]
+"mcp_services.log_analyzer" = ["resources/*.xml"]

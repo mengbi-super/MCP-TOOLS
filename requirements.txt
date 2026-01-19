@@ -1,1 +1,2 @@
-fastmcp>=0.9.0
+-e packages/log_analyzer
+-e packages/nacos_helper

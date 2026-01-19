@@ -3,16 +3,16 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mcp-tools"
-version = "0.0.0"
-description = "MCP 工具单仓库（元包，仅用于仓库管理）。"
+name = "mcp-nacos-helper"
+version = "1.0.3"
+description = "基于 FastMCP 的 Nacos 配置读取与服务状态分析工具。"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
     {name = "mengbi", email = "mengbi1014@gmail.com"}
 ]
-keywords = ["mcp", "tools", "monorepo"]
+keywords = ["mcp", "nacos", "fastmcp", "config"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -25,6 +25,10 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
 ]
 
+dependencies = [
+    "fastmcp>=0.9.0",
+]
+
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0.0",
@@ -34,9 +38,17 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/mengbi-super/MCP-TOOLS"
-Documentation = "https://github.com/mengbi-super/MCP-TOOLS/blob/main/README.md"
+Documentation = "https://github.com/mengbi-super/MCP-TOOLS/blob/main/packages/nacos_helper/README.md"
 Repository = "https://github.com/mengbi-super/MCP-TOOLS"
 Issues = "https://github.com/mengbi-super/MCP-TOOLS/issues"
 
+[project.scripts]
+mcp-nacos-helper = "mcp_services.nacos.tool:main"
+
 [tool.setuptools]
-packages = []
+package-dir = {"" = "../../src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["../../src"]
+include = ["mcp_services", "mcp_services.nacos"]

@@ -2,6 +2,7 @@
 """
 上传包到 PyPI 的辅助脚本
 """
+import argparse
 import os
 import subprocess
 import sys
@@ -32,12 +33,11 @@ def read_token_from_pypirc():
     
     return None
 
-def upload_to_pypi():
+def upload_to_pypi(dist_dir: Path):
     """上传包到 PyPI"""
     # 检查 dist 目录
-    dist_dir = Path("dist")
     if not dist_dir.exists():
-        print("错误: dist 目录不存在，请先运行 'py -m build'")
+        print(f"错误: dist 目录不存在，请先运行 'py -m build'（{dist_dir}）")
         return False
     
     # 获取 token
@@ -62,7 +62,7 @@ def upload_to_pypi():
         # 上传
         print("开始上传到 PyPI...")
         result = subprocess.run(
-            [sys.executable, "-m", "twine", "upload", "dist/*"],
+            [sys.executable, "-m", "twine", "upload", str(dist_dir / "*")],
             check=False
         )
         
@@ -72,6 +72,25 @@ def upload_to_pypi():
         if pypirc_backup.exists():
             pypirc_backup.rename(pypirc_path)
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="上传包到 PyPI 的辅助脚本")
+    parser.add_argument(
+        "package_dir",
+        nargs="?",
+        default=".",
+        help="包目录（默认当前目录，dist 位于 package_dir/dist）",
+    )
+    parser.add_argument(
+        "--dist-dir",
+        default=None,
+        help="dist 目录（可选，覆盖默认的 package_dir/dist）",
+    )
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
-    success = upload_to_pypi()
+    args = parse_args()
+    package_dir = Path(args.package_dir).resolve()
+    dist_dir = Path(args.dist_dir).resolve() if args.dist_dir else package_dir / "dist"
+    success = upload_to_pypi(dist_dir)
     sys.exit(0 if success else 1)
